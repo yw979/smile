@@ -12,6 +12,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.io.filefilter.FalseFileFilter;
+import org.apache.struts2.json.annotations.JSON;
+
 /**
  * @description:快递员
  */
@@ -134,7 +137,7 @@ public class Courier {
 	public void setVehicleNum(String vehicleNum) {
 		this.vehicleNum = vehicleNum;
 	}
-
+	@JSON(serialize=false)
 	public Set<FixedArea> getFixedAreas() {
 		return fixedAreas;
 	}
