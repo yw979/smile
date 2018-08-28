@@ -7,6 +7,7 @@ import java.util.List;
 
 
 
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,6 +73,11 @@ public class CustomerServiceImpl implements CustomerService {
 	public void updateType(String telephone) {
 		customerrepository.updateType(telephone);
 		
+	}
+
+	@Override
+	public Customer login(String telephone, String password) {
+		return customerrepository.findByTelephoneAndPassword(telephone,password);
 	}
 
 }

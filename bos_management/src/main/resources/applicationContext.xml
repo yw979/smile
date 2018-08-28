@@ -21,4 +21,10 @@
 	
 	<!-- 引入datasource,解决jpa报错 -->
 	<import resource="applicationContext-datasource.xml"/>
+	
+	<!-- 引入WebService配置 -->
+	<import resource="applicationContext-webService.xml"/>
+	
+	<!-- 引入quartz配置 -->
+	<import resource="applicationContext-quartz.xml"/>
 </beans>

@@ -20,12 +20,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 
-
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Controller;
 
+import cn.itcast.bos.domain.constant.Constants;
 import cn.itcast.bos.utils.MailUtils;
 import cn.itcast.bos.utils.SmsUtils;
 import cn.itcast.crm.domain.Customer;
@@ -65,15 +65,11 @@ public class CustomerAction extends BaseAction<Customer> {
 		});
 		return NONE;
 		/*
-		 //调用sms服务发送短信 //String result=SmsUtils.sendSmsByHTTP(model.getTelephone(), msg);
-		   String result="000/xxxx";
-		    if (result.startsWith("000")) {
-		     //发送成功
-		       return NONE;
-		   }else {
-		    //发送失败 
-		     throw new RuntimeException("短信发送失败,信息码:"+result);
-		      }
+		 * //调用sms服务发送短信 //String
+		 * result=SmsUtils.sendSmsByHTTP(model.getTelephone(), msg); String
+		 * result="000/xxxx"; if (result.startsWith("000")) { //发送成功 return
+		 * NONE; }else { //发送失败 throw new
+		 * RuntimeException("短信发送失败,信息码:"+result); }
 		 */
 
 	}
@@ -170,6 +166,27 @@ public class CustomerAction extends BaseAction<Customer> {
 			redisTemplate.delete(model.getTelephone());
 		}
 		return NONE;
+	}
+
+	@Action(value = "customer_login", results = {
+			@Result(name = "login", location = "login.html", type = "redirect"),
+			@Result(name = "success", location = "index.html#/myhome", type = "redirect") })
+	public String login() {
+		Customer customer = WebClient
+				.create(Constants.CRM_MANAGEMENT_URL
+						+ "/services/customerService/customer/login/?telephone="
+						+ model.getTelephone() + "&password="
+						+ model.getPassword())
+				.accept(MediaType.APPLICATION_JSON).get(Customer.class);
+		if (customer==null) {
+			//没有找到用户(登录失败)
+			return LOGIN;
+		}else {
+			//登录成功
+			return SUCCESS;
+		}
+		
+
 	}
 
 }

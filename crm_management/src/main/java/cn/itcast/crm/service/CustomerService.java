@@ -51,4 +51,11 @@ public interface CustomerService {
 	@Path("/customer/updateType/{telephone}")
 	@GET
 	public void updateType(@PathParam("telephone") String telephone);
+	
+	//编写 crm_management 的 CustomerService 添加 WebService 方法 login
+	@Path("/customer/login")
+	@GET
+	@Consumes({ "application/xml", "application/json" }) 	
+	public Customer login(@QueryParam("telephone") String telephone,
+			@QueryParam("password") String password);
 }

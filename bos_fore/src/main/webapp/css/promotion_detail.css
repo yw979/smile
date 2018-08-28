@@ -31,6 +31,10 @@
 	padding: 5px 15px;
 }
 
+.promotionbox img {
+	width: 900px
+}
+
 .promotions .partline {
 	height: 2px;
 	background: url(../images/icon/partline.png) repeat-x;
